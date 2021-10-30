@@ -68,11 +68,20 @@
                         <td>{{ offer.publisher }}</td>
                         <td>{{ offer.page_count }}</td>
                         <td>{{ offer.msrp }}</td>
+                        <td></td>
+                        <td>
+                          <button type="button" v-on:click="handleEditOffer(offer)" class="btn btn-outline-secondary btn-sm">Edit</button>
+                          <!-- <button type="button" class="btn btn-outline-secondary btn-sm">Delete</button> -->
+                          <button type="button" v-on:click="postDeleteOffer(offer)" class="btn btn-outline-secondary btn-sm">Delete</button>
+
+                        </td>
                     </tr>
                 </tbody>
             </table>
 
-            <form v-on:submit.prevent="postNewOffer">
+            <!-- <form v-on:submit.prevent="postNewOffer"> -->
+            <h3>{{ selectedOffer === null ? "Add " : "Edit " }} Book</h3>
+            <form v-on:submit.prevent="postOffer">
               <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" v-model="offerForm.title"
@@ -98,7 +107,11 @@
                 <label for="msrp" class="form-label">MSRP</label>
                 <input type="number" v-model="offerForm.msrp" class="form-control" id="msrp">
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+              <button type="submit" class="btn btn-primary">{{ selectedOffer === null ? "Add " : "Edit " }} Book</button>
+              <button type="button" class="btn btn-outline-secondary"
+                 v-if="selectedOffer"
+                 v-on:click="handleResetEdit">Cancel Edit</button>
             </form>
             <div class="noOffers" v-if="! offers.length">
               <h3>No Books in this category. 😥</h3>
